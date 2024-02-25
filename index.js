@@ -4,6 +4,7 @@ const app = express();
 
 
 const bookingRoutes = require('./router/book');
+const usersRouter = require('./router/users');
 
 
 app.use(express.json());
@@ -14,7 +15,8 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use('/book',bookingRoutes)
+app.use('/Booking',bookingRoutes)
+app.use('/users',usersRouter)
 
 
 
