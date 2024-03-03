@@ -22,6 +22,11 @@ const BookingHotel = sequelize.define('Booking', { //studio Anime
     Room:{
         type: Sequelize.INTEGER,
         foreignKey: false
+    },
+    date_checking:{
+        type: 'TIMESTAMP',
+        allowNull: null,
+        
     }
 }, {
     timestamps: false
@@ -79,7 +84,35 @@ const Room = sequelize.define('Room', {
         allowNull: false
     }
 });
- 
+
+
+const Admin = sequelize.define('Admin', {
+    admin_id: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        primaryKey: true
+    }, 
+    admin_name:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    admin_username:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    admin_password:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    admin_email:{
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    admin_phone:{
+        type: Sequelize.STRING,
+        allowNull: false
+    }
+});
 
 BookingHotel.belongsTo(Users, { foreignKey: 'User_id', as: 'belongsToUsers' });
 BookingHotel.belongsTo(RoomType, { foreignKey: 'Type_id', as: 'belongsToRoomType' });
@@ -89,7 +122,7 @@ BookingHotel.belongsTo(Room, { foreignKey: 'Room_id', as: 'belongsToRoom' });
 sequelize.sync();
 
 
-module.exports = {BookingHotel, Users, RoomType, Room}
+module.exports = {BookingHotel, Users, RoomType, Room,  Admin}
 
 
 // export default Shelves
