@@ -4,68 +4,71 @@ const router = express.Router()
 
 
 
-//--Users-----------------------------------------------------------------------------
+//---Room----------------------------------------------------------------------------------------------
+// Create a new room
 router.post('/', async (req, res) => {
-    try {pm
-        const newUser = await Users.create(req.body);
-        res.status(201).json(newUser);
+    try {
+        const newRoom = await Room.create(req.body);
+        res.status(201).json(newRoom);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Get all users
+// Get all rooms
 router.get('/', async (req, res) => {
     try {
-        const allUsers = await Users.findAll();
-        res.json(allUsers);
+        const allRooms = await Room.findAll();
+        res.json(allRooms);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Get user by ID
+// Get room by ID
 router.get('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const room = await Room.findByPk(req.params.id);
+        if (!room) {
+            res.status(404).json({ error: 'Room not found' });
         } else {
-            res.json(user);
+            res.json(room);
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Update user by ID
+// Update room by ID
 router.put('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const room = await Room.findByPk(req.params.id);
+        if (!room) {
+            res.status(404).json({ error: 'Room not found' });
         } else {
-            await user.update(req.body);
-            res.json(user);
+            await room.update(req.body);
+            res.json(room);
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Delete user by ID
+// Delete room by ID
 router.delete('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const room = await Room.findByPk(req.params.id);
+        if (!room) {
+            res.status(404).json({ error: 'Room not found' });
         } else {
-            await user.destroy();
+            await room.destroy();
             res.status(204).end();
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
+
+
 
 module.exports = router;

@@ -1,26 +1,21 @@
+const e = require('express');
 const express = require('express');
 const app = express();
-// require('./config');
+const books = require('./router/booking');
+const users = require('./router/users');
+const rooms = require('./router/rooms');
+const roomType = require('./router/roomType');
 
-
-const bookingRoutes = require('./router/book');
-const usersRouter = require('./router/users');
+const {BookingHotel, Users, RoomType, Room}= require('./config');
 
 
 app.use(express.json());
-app.use((req, res, next) => {
-    res.append('Access-Control-Allow-Origin', ['*']);
-    res.append('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-    res.append('Access-Control-Allow-Headers', 'Content-Type');
-    next();
-});
-
-app.use('/Booking',bookingRoutes)
-app.use('/users',usersRouter)
+app.use('/Booking',books);
+app.use('/users',users)
+app.use('/RoomType',roomType)
+app.use('/Room',rooms)
 
 
-
-let port = 3002
-app.listen(port, () => {
-    console.log(`Listening on port:${port}`);
-});
+// Start the server
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Server running on port ${port}`));

@@ -3,64 +3,62 @@ const {BookingHotel, Users, RoomType, Room}= require('../config');
 const router = express.Router()
 
 
-
-//--Users-----------------------------------------------------------------------------
 router.post('/', async (req, res) => {
-    try {pm
-        const newUser = await Users.create(req.body);
-        res.status(201).json(newUser);
+    try {
+        const newRoomType = await RoomType.create(req.body);
+        res.status(201).json(newRoomType);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Get all users
+// Get all RoomType
 router.get('/', async (req, res) => {
     try {
-        const allUsers = await Users.findAll();
-        res.json(allUsers);
+        const allRoomTypes = await RoomType.findAll();
+        res.json(allRoomTypes);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Get user by ID
+// Get RoomType by ID
 router.get('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const roomType = await RoomType.findByPk(req.params.id);
+        if (!roomType) {
+            res.status(404).json({ error: 'RoomType not found' });
         } else {
-            res.json(user);
+            res.json(roomType);
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Update user by ID
+// Update RoomType by ID
 router.put('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const roomType = await RoomType.findByPk(req.params.id);
+        if (!roomType) {
+            res.status(404).json({ error: 'RoomType not found' });
         } else {
-            await user.update(req.body);
-            res.json(user);
+            await roomType.update(req.body);
+            res.json(roomType);
         }
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 });
 
-// Delete user by ID
+// Delete RoomType by ID
 router.delete('/:id', async (req, res) => {
     try {
-        const user = await Users.findByPk(req.params.id);
-        if (!user) {
-            res.status(404).json({ error: 'User not found' });
+        const roomType = await RoomType.findByPk(req.params.id);
+        if (!roomType) {
+            res.status(404).json({ error: 'RoomType not found' });
         } else {
-            await user.destroy();
+            await roomType.destroy();
             res.status(204).end();
         }
     } catch (error) {
