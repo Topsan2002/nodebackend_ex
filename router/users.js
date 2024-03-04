@@ -4,9 +4,29 @@ const router = express.Router()
 
 
 
+router.post('/login', async (req, res) =>{
+    try{
+        const data = await Users.findOne({
+            where:{
+                email:req.body.email,
+                password:req.body.password
+            }}
+            )
+        if(data== null){
+            res.status(201).json({"status":false,"message":"ลงชื่อเข้าใช้ไม่สำเร็จ"});
+
+        }else{
+            res.status(201).json({"status":true,"message":"ลงชื่อเข้าใช้ไม่สำเร็จ","data":data});
+
+        }
+    }catch(error){
+        res.status(500).json({ error: error.message });
+    }
+})
+
 //--Users-----------------------------------------------------------------------------
 router.post('/', async (req, res) => {
-    try {pm
+    try {
         const newUser = await Users.create(req.body);
         res.status(201).json(newUser);
     } catch (error) {

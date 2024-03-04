@@ -1,11 +1,34 @@
 const express = require('express');
 const {Admin}= require('../config');
+const { error } = require('console');
 const router = express.Router()
 
 
 
-//---Room----------------------------------------------------------------------------------------------
-// Create a new room
+router.post('/login', async (req, res) =>{
+    try{
+        const data = await Admin.findOne({
+            where:{
+                admin_username:req.body.admin_username,
+                admin_password:req.body.admin_password
+            }}
+            )
+            // console.log(data);
+        if(data == null){
+            res.status(201).json({"status":false,"message":"ลงชื่อเข้าใช้ไม่สำเร็จ"});
+
+        }else{
+            res.status(201).json({"status":true,"message":"ลงชื่อเข้าใช้เร็จ","data":data});
+
+        }
+    }catch(error){
+        res.status(500).json({ error: error.message });
+
+    }
+    
+})
+
+
 router.post('/', async (req, res) => {
     try {
         const newAdmin = await Admin.create(req.body);
@@ -68,10 +91,6 @@ router.delete('/:id', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
-
-
-
-module.exports = router;
 
 
 
