@@ -37,10 +37,53 @@ router.get('/', async (req, res) => {
     }
 });
 
+router.get('/userid/:id', async (req, res) => {
+    try {
+        const allBookings = await BookingHotel.findAll({
+            include: [
+                {
+                    model: Users,
+                    
+                },
+                {
+                    model: RoomType,
+                    
+                },
+                {
+                    model: Room,
+                   
+                }
+            ],
+            where: {
+                User_id: req.params.id
+              }
+        });
+        res.json(allBookings);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+
+
 // Get booking by ID
 router.get('/:id', async (req, res) => {
     try {
-        const booking = await BookingHotel.findByPk(req.params.id);
+        const booking = await BookingHotel.findByPk(req.params.id,{
+            include: [
+                {
+                    model: Users,
+                    
+                },
+                {
+                    model: RoomType,
+                    
+                },
+                {
+                    model: Room,
+                   
+                }
+            ]});
         if (!booking) {
             res.status(404).json({ error: 'Booking not found' });
         } else {

@@ -22,10 +22,11 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 // Get RoomType by ID
 router.get('/:id', async (req, res) => {
     try {
-        const roomType = await RoomType.findByPk(req.params.id);
+        const roomType = await RoomType.findByPk(req.params.id,);
         if (!roomType) {
             res.status(404).json({ error: 'RoomType not found' });
         } else {
