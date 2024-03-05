@@ -16,7 +16,21 @@ router.post('/', async (req, res) => {
 // Get all bookings
 router.get('/', async (req, res) => {
     try {
-        const allBookings = await BookingHotel.findAll();
+        const allBookings = await BookingHotel.findAll({
+            include: [
+                {
+                    model: Users,
+                    
+                },
+                {
+                    model: RoomType,
+                    
+                },
+                {
+                    model: Room,
+                   
+                }
+            ]});
         res.json(allBookings);
     } catch (error) {
         res.status(500).json({ error: error.message });

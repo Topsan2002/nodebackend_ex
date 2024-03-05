@@ -5,6 +5,7 @@ const sequelize = new Sequelize('database', 'username', 'password', {
     dialect: 'sqlite',
     storage: './Database/SQHotel.sqlite'
 });
+
 const BookingHotel = sequelize.define('Booking', { //studio Anime
     Booking_id: {
         type: Sequelize.INTEGER,
@@ -19,9 +20,13 @@ const BookingHotel = sequelize.define('Booking', { //studio Anime
         type: Sequelize.INTEGER,
         foreignKey: false
     },
-    Room:{
+    Room_id:{
         type: Sequelize.INTEGER,
         foreignKey: false
+    },
+   booking_quautity:{
+        type:Sequelize.INTEGER,
+        allowNull: null,  
     },
     date_checking:{
         type: 'TIMESTAMP',
@@ -31,6 +36,7 @@ const BookingHotel = sequelize.define('Booking', { //studio Anime
 }, {
     timestamps: false
 });
+
 const Users = sequelize.define('Users', {
     User_id: {
         type: Sequelize.INTEGER,
@@ -54,6 +60,7 @@ const Users = sequelize.define('Users', {
         allowNull: false
     }
 });
+
 const RoomType = sequelize.define('RoomType', {
     Type_id: {
         type: Sequelize.INTEGER,
@@ -63,8 +70,12 @@ const RoomType = sequelize.define('RoomType', {
     Type_Name:{
         type: Sequelize.STRING,
         allowNull: false
-    }
-});
+    }, 
+    Type_quantity:{
+        type:Sequelize.INTEGER,
+        allowNull: false
+    }});
+
 const Room = sequelize.define('Room', {
     Room_id: {
         type: Sequelize.INTEGER,
@@ -72,13 +83,14 @@ const Room = sequelize.define('Room', {
         primaryKey: true
     }, 
     Type_id:{
-        type: Sequelize.STRING,
+        type:Sequelize.INTEGER,
+        foreignKey: false
+    },
+   Room_quantity:{
+        type:Sequelize.INTEGER,
         allowNull: false
     },
-    Type_Name:{
-        type: Sequelize.STRING,
-        allowNull: false
-    },
+    
     price:{
         type: Sequelize.INTEGER,
         allowNull: false
@@ -114,9 +126,9 @@ const Admin = sequelize.define('Admin', {
     }
 });
 
-BookingHotel.belongsTo(Users, { foreignKey: 'User_id', as: 'belongsToUsers' });
-BookingHotel.belongsTo(RoomType, { foreignKey: 'Type_id', as: 'belongsToRoomType' });
-BookingHotel.belongsTo(Room, { foreignKey: 'Room_id', as: 'belongsToRoom' });
+BookingHotel.belongsTo(Users, { foreignKey: 'User_id', });
+BookingHotel.belongsTo(RoomType, { foreignKey: 'Type_id', });
+BookingHotel.belongsTo(Room, { foreignKey: 'Room_id', });
 
 
 sequelize.sync();
