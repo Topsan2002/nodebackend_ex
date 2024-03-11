@@ -24,11 +24,11 @@ const BookingHotel = sequelize.define('Booking', { //studio Anime
         type: Sequelize.INTEGER,
         foreignKey: false
     },
-   booking_quautity:{
-        type:Sequelize.INTEGER,
+    date_checkin:{
+        type:'TIMESTAMP',
         allowNull: null,  
     },
-    date_checking:{
+    date_checkout:{
         type: 'TIMESTAMP',
         allowNull: null,
         
@@ -129,7 +129,7 @@ const Admin = sequelize.define('Admin', {
 BookingHotel.belongsTo(Users, { foreignKey: 'User_id', });
 BookingHotel.belongsTo(RoomType, { foreignKey: 'Type_id', });
 BookingHotel.belongsTo(Room, { foreignKey: 'Room_id', });
-// BookingHotel.belongsTo(Room, { foreignKey: 'Type_id', });
+BookingHotel.belongsTo(Room, { foreignKey: 'Type_id', });
 
 
 sequelize.sync();
